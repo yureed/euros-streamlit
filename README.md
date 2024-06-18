@@ -14,7 +14,7 @@ This repository contains the code and resources for the **Euros Match Reports Da
 
 ## Live Dashboard
 
-Check out the live dashboard here: [Euros Match Reports Dashboard](https://euros-analysis.streamlit.app/)
+Check out the live dashboard here: [Euros Match Reports Dashboard](https://euros-analysis-2024.streamlit.app/)
 
 ## Connect with Me
 
