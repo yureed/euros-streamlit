@@ -23,4 +23,8 @@ Stay updated and follow my work:
 - **Twitter**: [@yureedelahi](https://twitter.com/yureedelahi)
 - **LinkedIn**: [Connect with me](https://www.linkedin.com/in/yureedelahi/)
 
+## Mention Me
+
+The code has been provided for you. Meanwhile, the data is being accessed from my private google sheets. If you guys would like some help building this, I am happy to help. Do mention me if you cite my dashboard.
+
 
