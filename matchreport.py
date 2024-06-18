@@ -30,17 +30,21 @@ conn_events = st.connection("gsheets", type="GSheetsConnection")
 #Add a title to the Streamlit app
 st.title("Euro 2024 Match Reports")
 
-F#unction to read data from a worksheet
-@st.cache_data(ttl=25200)
-def read_data(connection, worksheet):
-    data = connection.read(worksheet=worksheet, ttl="10080m")
-    return data
+# Create a connection object.
+conn = st.connection("gsheets", type=GSheetsConnection)
+# Add a title to the Streamlit app
+st.title("Premier League Match Reports")
 
-R#ead data from the specific worksheets
-consolidated_defined_actions = read_data(conn_events, "Euro Events")
-consolidated_teams = read_data(conn_teams, "Euro Teams")
-consolidated_players = read_data(conn_players, "Euro Players")
-# Initialize an empty list to store the game data
+
+@st.cache_data(ttl=25200) 
+def read_data(worksheet):
+    consolidated_data = conn.read(worksheet=worksheet, ttl="10080m")
+    return consolidated_data
+
+consolidated_defined_actions = read_data("events")
+consolidated_teams = read_data("teams")
+consolidated_players = read_data("players")
+
 game_data = []
 
 # Iterate over unique game_ids
