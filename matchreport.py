@@ -50,7 +50,7 @@ def fetch_data(table_name):
     return response.data
 
 # Fetch data from the tables
-consolidated_defined_actions = fetch_data("events")
+consolidated_defined_actions = fetch_data("defined_actions")
 consolidated_teams = fetch_data("teams")
 consolidated_players = fetch_data("players")
 
