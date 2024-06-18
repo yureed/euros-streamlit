@@ -24,9 +24,9 @@ import numpy as np
 from streamlit_gsheets import GSheetsConnection
 
 # Set up connections for the three different Google Sheets
-conn_events = st.connection("gsheets", type="GSheetsConnection")
 conn_teams = st.connection("teams", type="GSheetsConnection")
 conn_players = st.connection("players", type="GSheetsConnection")
+conn_events = st.connection("events", type="GSheetsConnection")
 
 # Add a title to the Streamlit app
 st.title("Euro 2024 Match Reports")
