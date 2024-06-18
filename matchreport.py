@@ -45,11 +45,14 @@ supabase = init_connection()
 def fetch_data(table_name):
     response = supabase.table(table_name).select("*").execute()
     # Print the response to understand its structure
-    st.write(response)
+    st.write("Response:", response)
+    
     if hasattr(response, 'error') and response.error:
-        st.error(response.error)
+        st.error(f"Error fetching data from {table_name}: {response.error}")
         return []
     elif hasattr(response, 'data'):
+        if not response.data:
+            st.warning(f"No data found in table {table_name}.")
         return response.data
     else:
         st.error("Unexpected response structure")
