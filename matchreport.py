@@ -28,20 +28,28 @@ st.title("Euro 2024 Match Reports")
 
 
 import streamlit as st
-from st_supabase_connection import SupabaseConnection
+from supabase import create_client, Client
 
 # Initialize connection.
-conn = st.connection("supabase", type=SupabaseConnection)
+# Uses st.cache_resource to only run once.
+@st.cache_resource
+def init_connection():
+    url = st.secrets["SUPABASE_URL"]
+    key = st.secrets["SUPABASE_KEY"]
+    return create_client(url, key)
 
-# Function to read data from Supabase
-@st.cache_data(ttl=25200) 
-def read_data(table_name):
-    return conn.query("*", table=table_name, ttl="10080m").execute()
+supabase = init_connection()
 
-# Read data from three tables
-consolidated_defined_actions = read_data("defined_actions")
-consolidated_teams = read_data("teams")
-consolidated_players = read_data("players")
+# Function to perform query.
+# Uses st.cache_data to only rerun when the query changes or after 10 min.
+@st.cache_data(ttl=600)
+def fetch_data(table_name):
+    return supabase.table(table_name).select("*").execute()
+
+# Fetch data from three tables
+consolidated_defined_actions = fetch_data("events")
+consolidated_teams = fetch_data("teams")
+consolidated_players = fetch_data("players")
 
 
 
