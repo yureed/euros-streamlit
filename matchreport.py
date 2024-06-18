@@ -21,26 +21,20 @@ path_eff = [path_effects.Stroke(linewidth=1.5, foreground='black'), path_effects
 import numpy as np
 
 
-from streamlit_gsheets import GSheetsConnection
-import gspread
-from oauth2client.service_account import ServiceAccountCredentials
-
-# Set up connections for the three different Google Sheets using gspread
-scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
-creds = ServiceAccountCredentials.from_json_keyfile_name('path/to/your/service_account_credentials.json', scope)
-client = gspread.authorize(creds)
-
-# Function to read data from a worksheet
 @st.cache_data(ttl=25200)
-def read_data(client, sheet_name, worksheet_name):
-    sheet = client.open(sheet_name).worksheet(worksheet_name)
-    data = sheet.get_all_records()
+def read_data_from_csv(url):
+    data = pd.read_csv(url)
     return data
 
-# Read data from the specific worksheets
-consolidated_defined_actions = read_data(client, "Euro Events", "Euro Events")
-consolidated_teams = read_data(client, "Euro Teams", "Euro Teams")
-consolidated_players = read_data(client, "Euro Players", "Euro Players")
+# URLs to the CSV files in your GitHub repository
+url_teams = "https://raw.githubusercontent.com/yourusername/yourrepository/main/data/consolidated_teams.csv"
+url_players = "https://raw.githubusercontent.com/yourusername/yourrepository/main/data/consolidated_players.csv"
+url_events = "https://raw.githubusercontent.com/yourusername/yourrepository/main/data/consolidated_defined_actions.csv"
+
+# Read data from the CSV files
+consolidated_defined_actions = read_data_from_csv(url_events)
+consolidated_teams = read_data_from_csv(url_teams)
+consolidated_players = read_data_from_csv(url_players)
 
 # Initialize an empty list to store the game data
 game_data = []
