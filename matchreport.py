@@ -33,9 +33,9 @@ def read_data(worksheet):
     consolidated_data = conn.read(worksheet=worksheet, ttl="10080m")
     return consolidated_data
 
-consolidated_defined_actions = read_data("euroevents")
-consolidated_teams = read_data("euroteams")
-consolidated_players = read_data("europlayers")
+consolidated_defined_actions = read_data("Euro Events")
+consolidated_teams = read_data("Euro Teams")
+consolidated_players = read_data("Euro Players")
 
 # Initialize an empty list to store the game data
 game_data = []
