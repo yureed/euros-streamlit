@@ -2,7 +2,7 @@ seaborn
 mplsoccer
 plotly
 matplotlib
-st-supabase-connection
+st-gsheets-connection
 highlight_text
 matplotlib
 numpy
