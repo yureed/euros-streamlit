@@ -7,3 +7,4 @@ highlight_text
 matplotlib
 numpy
 pandas
+supabase
