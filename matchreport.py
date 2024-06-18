@@ -22,14 +22,13 @@ import numpy as np
 
 
 @st.cache_data(ttl=25200)
-def read_data_from_csv(url):
-    data = pd.read_csv(url)
+def read_data_from_csv(file_path):
+    data = pd.read_csv(file_path)
     return data
-
 # URLs to the CSV files in your GitHub repository
-url_teams = "https://raw.githubusercontent.com/yourusername/yourrepository/main/data/consolidated_teams.csv"
-url_players = "https://raw.githubusercontent.com/yourusername/yourrepository/main/data/consolidated_players.csv"
-url_events = "https://raw.githubusercontent.com/yourusername/yourrepository/main/data/consolidated_defined_actions.csv"
+url_teams = "data/consolidated_teams.csv"
+url_players = "data/consolidated_players.csv"
+url_events = "data/consolidated_defined_actions.csv"
 
 # Read data from the CSV files
 consolidated_defined_actions = read_data_from_csv(url_events)
