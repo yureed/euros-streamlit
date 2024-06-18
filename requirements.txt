@@ -5,6 +5,6 @@ matplotlib
 st-gsheets-connection
 highlight_text
 matplotlib
-numpy
-pandas
-supabase
+numpy==1.19.5 
+pandas==1.1.5
+
