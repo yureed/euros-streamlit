@@ -552,15 +552,8 @@ def general_report(home_passes_between_df,home_average_locs_and_count_df,away_pa
     away_goal = len(away_team_goal_count)
     scoreline_ax = fig.add_subplot(grid[0:2, 4:10])
     shortened_names = {
-        'Manchester United': 'Man Utd',
-        'Manchester City': 'Man City',
-        'Sheffield United': 'Sheff Utd',
-        'Newcastle': 'New Utd',
-        'Bournemouth': "B'mouth",
-        'Nottingham Forest': 'Nott Forest',
-        'Aston Villa':"A' Villa",
-        'Crystal Palace': "Palace",
-        'Tottenham':'Spurs'
+        'Switzerland': 'Swiss',
+        'Netherlands': "N'land"
         # Add more mappings as needed
     }
     
