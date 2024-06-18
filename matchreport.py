@@ -33,15 +33,18 @@ from st_supabase_connection import SupabaseConnection
 # Initialize connection.
 conn = st.connection("supabase", type=SupabaseConnection)
 
-# Function to read data from Supabase
-@st.cache_data(ttl=25200) 
-def read_data(table_name):
-    return conn.query("*", table=table_name, ttl="10080m").execute()
+@st.cache_data(ttl=25200)
+def fetch_data(table_name):
+    response = supabase.table(table_name).select("*").execute()
+    if response.error:
+        st.error(response.error)
+        return []
+    return response.data
 
-# Read data from three tables
-consolidated_defined_actions = read_data("defined_actions")
-consolidated_teams = read_data("teams")
-consolidated_players = read_data("players")
+# Fetch data from three tables
+consolidated_defined_actions = fetch_data("defined_actions")
+consolidated_teams = fetch_data("teams")
+consolidated_players = fetch_data("players")
 
 
 
