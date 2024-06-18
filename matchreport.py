@@ -33,7 +33,7 @@ from st_supabase_connection import SupabaseConnection
 # Initialize connection.
 conn = st.connection("supabase", type=SupabaseConnection)
 
-@st.cache_data(ttl=25200)
+@st.cache_data(ttl=600)
 def fetch_data(table_name):
     response = supabase.table(table_name).select("*").execute()
     if response.error:
@@ -41,10 +41,11 @@ def fetch_data(table_name):
         return []
     return response.data
 
-# Fetch data from three tables
-consolidated_defined_actions = fetch_data("defined_actions")
-consolidated_teams = fetch_data("teams")
-consolidated_players = fetch_data("players")
+# Fetch data from the tables
+events_data = fetch_data("defined_actions")
+teams_data = fetch_data("teams")
+players_data = fetch_data("players")
+
 
 
 
