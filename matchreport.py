@@ -57,6 +57,15 @@ def fetch_data(table_name):
     else:
         st.error("Unexpected response structure")
         return []
+
+@st.cache_data(ttl=600)
+def list_tables():
+    response = supabase.rpc("pg_tables").execute()
+    st.write("Available tables in the database:", response)
+    return response
+
+# List all tables to verify
+list_tables()
         
 # Fetch data from the tables
 consolidated_defined_actions = fetch_data("defined_actions")
