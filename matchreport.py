@@ -24,7 +24,7 @@ import numpy as np
 from streamlit_gsheets import GSheetsConnection
 
 # Set up connections for the three different Google Sheets
-conn_events = st.connection("gsheets_events", type="GSheetsConnection")
+conn_events = st.connection("gsheets", type="GSheetsConnection")
 conn_teams = st.connection("gsheets_teams", type="GSheetsConnection")
 conn_players = st.connection("gsheets_players", type="GSheetsConnection")
 
