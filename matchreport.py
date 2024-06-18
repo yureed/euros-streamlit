@@ -40,20 +40,19 @@ def init_connection():
 
 supabase = init_connection()
 
-# Function to perform query.
+# Function to fetch data from a table
 @st.cache_data(ttl=600)
 def fetch_data(table_name):
     response = supabase.table(table_name).select("*").execute()
     if response.error:
         st.error(response.error)
         return []
-    return response.data  # Ensure data is a list of dictionaries
+    return response.data
 
 # Fetch data from the tables
-consolidated_defined_actions = fetch_data("defined_actions")
+consolidated_defined_actions = fetch_data("events")
 consolidated_teams = fetch_data("teams")
 consolidated_players = fetch_data("players")
-
 
 
 # Initialize an empty list to store the game data
