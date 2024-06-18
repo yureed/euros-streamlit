@@ -25,7 +25,7 @@ import numpy as np
 
 # Add a title to the Streamlit app
 st.title("Euro 2024 Match Reports")
-
+from supabase import create_client, Client
 
 import streamlit as st
 from st_supabase_connection import SupabaseConnection
