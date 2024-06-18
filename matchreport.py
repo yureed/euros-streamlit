@@ -24,7 +24,7 @@ import numpy as np
 
 
 # Add a title to the Streamlit app
-st.title("Premier League Match Reports")
+st.title("Euro 2024 Match Reports")
 
 
 import streamlit as st
