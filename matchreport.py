@@ -22,26 +22,25 @@ import numpy as np
 
 
 from streamlit_gsheets import GSheetsConnection
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
 
-# Set up connections for the three different Google Sheets
-conn_teams = st.connection("teams", type="GSheetsConnection")
-conn_players = st.connection("players", type="GSheetsConnection")
-conn_events = st.connection("events", type="GSheetsConnection")
-
-# Add a title to the Streamlit app
-st.title("Euro 2024 Match Reports")
+# Set up connections for the three different Google Sheets using gspread
+scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/drive"]
+creds = ServiceAccountCredentials.from_json_keyfile_name('path/to/your/service_account_credentials.json', scope)
+client = gspread.authorize(creds)
 
 # Function to read data from a worksheet
 @st.cache_data(ttl=25200)
-def read_data(connection, worksheet):
-    data = connection.read(worksheet=worksheet, ttl="10080m")
+def read_data(client, sheet_name, worksheet_name):
+    sheet = client.open(sheet_name).worksheet(worksheet_name)
+    data = sheet.get_all_records()
     return data
 
 # Read data from the specific worksheets
-consolidated_defined_actions = read_data(conn_events, "Euro Events")
-consolidated_teams = read_data(conn_teams, "Euro Teams")
-consolidated_players = read_data(conn_players, "Euro Players")
-
+consolidated_defined_actions = read_data(client, "Euro Events", "Euro Events")
+consolidated_teams = read_data(client, "Euro Teams", "Euro Teams")
+consolidated_players = read_data(client, "Euro Players", "Euro Players")
 
 # Initialize an empty list to store the game data
 game_data = []
