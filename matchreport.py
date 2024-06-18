@@ -47,7 +47,7 @@ def fetch_data(table_name):
     return supabase.table(table_name).select("*").execute()
 
 # Fetch data from three tables
-consolidated_defined_actions = fetch_data("events")
+consolidated_defined_actions = fetch_data("defined_actions")
 consolidated_teams = fetch_data("teams")
 consolidated_players = fetch_data("players")
 
