@@ -25,7 +25,7 @@ import numpy as np
 
 # Add a title to the Streamlit app
 st.title("Euro 2024 Match Reports")
-from supabase import create_client, Client
+
 
 import streamlit as st
 from st_supabase_connection import SupabaseConnection
@@ -33,18 +33,16 @@ from st_supabase_connection import SupabaseConnection
 # Initialize connection.
 conn = st.connection("supabase", type=SupabaseConnection)
 
-@st.cache_data(ttl=600)
-def fetch_data(table_name):
-    response = supabase.table(table_name).select("*").execute()
-    if response.error:
-        st.error(response.error)
-        return []
-    return response.data
+# Function to read data from Supabase
+@st.cache_data(ttl=25200) 
+def read_data(table_name):
+    return conn.query("*", table=table_name, ttl="10080m").execute()
 
-# Fetch data from the tables
-events_data = fetch_data("defined_actions")
-teams_data = fetch_data("teams")
-players_data = fetch_data("players")
+# Read data from three tables
+consolidated_defined_actions = read_data("defined_actions")
+consolidated_teams = read_data("teams")
+consolidated_players = read_data("players")
+
 
 
 
