@@ -21,50 +21,21 @@ path_eff = [path_effects.Stroke(linewidth=1.5, foreground='black'), path_effects
 import numpy as np
 
 
+from streamlit_gsheets import GSheetsConnection
 
+# Create a connection object.
+conn = st.connection("gsheets", type=GSheetsConnection)
 
 # Add a title to the Streamlit app
 st.title("Euro 2024 Match Reports")
+@st.cache_data(ttl=25200) 
+def read_data(worksheet):
+    consolidated_data = conn.read(worksheet=worksheet, ttl="10080m")
+    return consolidated_data
 
-
-import streamlit as st
-from supabase import create_client, Client
-
-# Initialize connection.
-# Uses st.cache_resource to only run once.
-@st.cache_resource
-def init_connection():
-    url = st.secrets["url"]
-    key = st.secrets["key"]
-    return create_client(url, key)
-
-supabase = init_connection()
-
-# Function to fetch data from a table
-@st.cache_data(ttl=600)
-def fetch_data(table_name):
-    response = supabase.table(table_name).select("*").execute()
-    # Print the response to understand its structure
-    st.write("Response:", response)
-    
-    if hasattr(response, 'error') and response.error:
-        st.error(f"Error fetching data from {table_name}: {response.error}")
-        return []
-    elif hasattr(response, 'data'):
-        if not response.data:
-            st.warning(f"No data found in table {table_name}.")
-        return response.data
-    else:
-        st.error("Unexpected response structure")
-        return []
-
-
-        
-# Fetch data from the tables
-consolidated_defined_actions = fetch_data("defined_actions")
-consolidated_teams = fetch_data("teams")
-consolidated_players = fetch_data("players")
-
+consolidated_defined_actions = read_data("euroevents")
+consolidated_teams = read_data("euroteams")
+consolidated_players = read_data("europlayers")
 
 # Initialize an empty list to store the game data
 game_data = []
