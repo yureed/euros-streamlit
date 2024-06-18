@@ -44,11 +44,17 @@ supabase = init_connection()
 @st.cache_data(ttl=600)
 def fetch_data(table_name):
     response = supabase.table(table_name).select("*").execute()
-    if response.error:
+    # Print the response to understand its structure
+    st.write(response)
+    if hasattr(response, 'error') and response.error:
         st.error(response.error)
         return []
-    return response.data
-
+    elif hasattr(response, 'data'):
+        return response.data
+    else:
+        st.error("Unexpected response structure")
+        return []
+        
 # Fetch data from the tables
 consolidated_defined_actions = fetch_data("defined_actions")
 consolidated_teams = fetch_data("teams")
