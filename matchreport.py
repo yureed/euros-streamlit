@@ -21,20 +21,25 @@ path_eff = [path_effects.Stroke(linewidth=1.5, foreground='black'), path_effects
 import numpy as np
 
 
+from streamlit_gsheets import GSheetsConnection
+
+#Set up connections for the three different Google Sheets
+
+conn_events = st.connection("gsheets", type="GSheetsConnection")
+
+#Add a title to the Streamlit app
+st.title("Euro 2024 Match Reports")
+
+F#unction to read data from a worksheet
 @st.cache_data(ttl=25200)
-def read_data_from_csv(file_path):
-    data = pd.read_csv(file_path)
+def read_data(connection, worksheet):
+    data = connection.read(worksheet=worksheet, ttl="10080m")
     return data
-# URLs to the CSV files in your GitHub repository
-url_teams = "data/consolidated_teams.csv"
-url_players = "data/consolidated_players.csv"
-url_events = "data/consolidated_defined_actions.csv"
 
-# Read data from the CSV files
-consolidated_defined_actions = read_data_from_csv(url_events)
-consolidated_teams = read_data_from_csv(url_teams)
-consolidated_players = read_data_from_csv(url_players)
-
+R#ead data from the specific worksheets
+consolidated_defined_actions = read_data(conn_events, "Euro Events")
+consolidated_teams = read_data(conn_teams, "Euro Teams")
+consolidated_players = read_data(conn_players, "Euro Players")
 # Initialize an empty list to store the game data
 game_data = []
 
