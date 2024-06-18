@@ -41,17 +41,18 @@ def init_connection():
 supabase = init_connection()
 
 # Function to perform query.
-# Uses st.cache_data to only rerun when the query changes or after 10 min.
 @st.cache_data(ttl=600)
 def fetch_data(table_name):
-    return supabase.table(table_name).select("*").execute()
+    response = supabase.table(table_name).select("*").execute()
+    if response.error:
+        st.error(response.error)
+        return []
+    return response.data  # Ensure data is a list of dictionaries
 
-# Fetch data from three tables
+# Fetch data from the tables
 consolidated_defined_actions = fetch_data("defined_actions")
 consolidated_teams = fetch_data("teams")
 consolidated_players = fetch_data("players")
-
-
 
 
 
