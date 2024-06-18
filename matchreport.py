@@ -20,22 +20,29 @@ from mplsoccer import Pitch, FontManager, Sbopen, VerticalPitch
 path_eff = [path_effects.Stroke(linewidth=1.5, foreground='black'), path_effects.Normal()]
 import numpy as np
 
-from streamlit_gsheets import GSheetsConnection
 
-# Create a connection object.
-conn = st.connection("gsheets", type=GSheetsConnection)
+
+
 # Add a title to the Streamlit app
 st.title("Premier League Match Reports")
 
 
-@st.cache_data(ttl=25200) 
-def read_data(worksheet):
-    consolidated_data = conn.read(worksheet=worksheet, ttl="10080m")
-    return consolidated_data
+import streamlit as st
+from st_supabase_connection import SupabaseConnection
 
-consolidated_defined_actions = read_data("events")
+# Initialize connection.
+conn = st.connection("supabase", type=SupabaseConnection)
+
+# Function to read data from Supabase
+@st.cache_data(ttl=25200) 
+def read_data(table_name):
+    return conn.query("*", table=table_name, ttl="10080m").execute()
+
+# Read data from three tables
+consolidated_defined_actions = read_data("defined_actions")
 consolidated_teams = read_data("teams")
 consolidated_players = read_data("players")
+
 
 
 # Initialize an empty list to store the game data
