@@ -1321,7 +1321,7 @@ def player_reports(matchdataframe,selected_player_report,selected_player_id,sele
         plt.subplots_adjust(top=0.96)  # Increase the top margin
         st.pyplot(fig)
     elif selected_player_report == 'Corner':
-        player_plot = player_plot[player_plot['type_name'] == 'corner']
+        player_plot = player_plot[player_plot['type_name'] == 'corner_crossed']
         successful_player_plot = player_plot[player_plot['result_name'] == 'success']
         fail_player_plot = player_plot[player_plot['result_name'] == 'fail']
         pitch.arrows(successful_player_plot['start_x'], successful_player_plot['start_y'],
