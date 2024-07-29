@@ -6,4 +6,5 @@ st-gsheets-connection
 highlight_text
 matplotlib
 numpy
+streamlit==1.16.0
 pandas
